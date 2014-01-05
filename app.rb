@@ -17,7 +17,6 @@ module VideoSync
     end
 
     post '/video/:id' do
-      redis = redis_connect
       match = /.*\=(.*)\&?/.match(params["video"])
       if match      
         @video = match[1]
@@ -31,11 +30,14 @@ module VideoSync
     end
 
     get '/video/:id' do
-      redis = redis_connect
       @video = redis.get(params[:id])
-      @nocontrols = "&controls=0"
-      @link = params[:id]
-      haml :room
+      if @video
+        @nocontrols = "&controls=0"
+        @link = params[:id]
+        haml :room
+      else
+        haml :not_found
+      end
     end
 
     helpers do
@@ -43,7 +45,7 @@ module VideoSync
         haml partial.to_sym
       end
 
-      def redis_connect
+      def redis
         uri = URI.parse(ENV["REDISTOGO_URL"])
         Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
       end
