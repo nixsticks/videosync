@@ -9,7 +9,7 @@ module VideoSync
     end
 
     get '/' do
-      @link = SecureRandom.hex
+      @link = SecureRandom.urlsafe_base64(5)
       haml :index
     end
 
@@ -19,11 +19,6 @@ module VideoSync
 
     get '/help' do
       haml :help
-    end
-
-    get '/start' do
-      @link = SecureRandom.urlsafe_base64(5)
-      haml :start
     end
 
     post '/video/:id' do
