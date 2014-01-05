@@ -54,7 +54,8 @@ ws.onmessage = function(message) {
   }
   else {
     time = ytplayer.getCurrentTime();
-    if (Math.abs(time - data) > 1 || time == undefined) {
+    if (time != data || time == undefined) {
+    // if (Math.abs(time - data) > 1 || time == undefined) {
       ytplayer.seekTo(data, true);
     }
   }
