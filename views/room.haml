@@ -6,7 +6,7 @@
     #ytapiplayer
       %p You need Flash player 8+ and JavaScript enabled to view this video.
     %script{:type=>"text/javascript"}
-      var params = { allowScriptAccess: "always" };
+      var params = { allowScriptAccess: "always", allowFullScreen: "true" };
       var atts = { id: "myytplayer" };
       swfobject.embedSWF("http://www.youtube.com/v/#{@video}?enablejsapi=1&playerapiid=ytplayer&version=3#{@nocontrols}", "ytapiplayer", "425", "356", "8", null, null, params, atts);
   %p Share the link with friends: <a href="/video/#{@link}", target="_blank">http://classvideo.herokuapp.com/video/#{@link}</a>
