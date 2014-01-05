@@ -9,5 +9,14 @@
       var params = { allowScriptAccess: "always", allowFullScreen: "true" };
       var atts = { id: "myytplayer" };
       swfobject.embedSWF("http://www.youtube.com/v/#{@video}?enablejsapi=1&playerapiid=ytplayer&version=3#{@nocontrols}", "ytapiplayer", "425", "356", "8", null, null, params, atts);
-  %p Share with friends: <a href="/video/#{@link}", target="_blank">http://classvideo.herokuapp.com/video/#{@link}</a>
+    %p Share with friends: <a href="/video/#{@link}", target="_blank">http://classvideo.herokuapp.com/video/#{@link}</a>
+  %form{:id=>"input-form", :class=>"form-inline"}
+    .form-group
+      %input{:id=>"input-handle", :type=>"text", :class=>"form-control", :placeholder=>"Enter handle", :autofocus=>"true"}
+    .form-group
+      %input{:id=>"input-text", :type=>"text", :class=>"form-control", :placeholder=>"Enter chat text here", :autofocus=>"true"}
+    %button{:class=>"btn btn-primary", :type=>"submit"} Send
+  .page-header
+    %h1 Chat
+  .chat-text
 %script{:src=>"/js/video.js"}
