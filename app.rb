@@ -22,7 +22,7 @@ module VideoSync
     end
 
     get '/start' do
-      @link = SecureRandom.hex
+      @link = SecureRandom.urlsafe_base64(5)
       haml :start
     end
 
