@@ -1,18 +1,18 @@
 .container
   %nav{:class=>"navbar navbar-inverse navbar-default", :role=>"navigation"}
     .navbar-header
-      %a{:class=>"navbar-brand", :href=>"/"} WatchWithMe
-      %button{:type=>"button", :class=>"navbar-toggle", :data=>{:toggle=>"collapse", :target=>"collapse"}}
+      %button{:type=>"button", :class=>"navbar-toggle", :data=>{:toggle=>"collapse", :target=>"#collapse"}}
         %span{:class=>"sr-only"} Toggle navigation
         %span{:class=>"icon-bar"}
         %span{:class=>"icon-bar"}
         %span{:class=>"icon-bar"}
+      %a{:class=>"navbar-brand", :href=>"/"} WatchWithMe
 
-      .collapse.navbar-collapse#collapse
-        %ul{:class=>"nav navbar-nav"}
-          %li
-            %a{:href=>"/"} Home
-          %li
-            %a{:href=>"/about"} About
-          %li
-            %a{:href=>"/help"} Help
+    .collapse.navbar-collapse#collapse
+      %ul{:class=>"nav navbar-nav"}
+        %li
+          %a{:href=>"/"} Home
+        %li
+          %a{:href=>"/about"} About
+        %li
+          %a{:href=>"/help"} Help
