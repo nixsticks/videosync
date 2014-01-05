@@ -9,10 +9,16 @@ module VideoSync
     end
 
     get '/' do
+      @link = SecureRandom.hex
       haml :index
     end
 
+    get '/about' do
+      haml :about
+    end
+
     get '/help' do
+      haml :help
     end
 
     get '/start' do

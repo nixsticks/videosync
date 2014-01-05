@@ -3,5 +3,8 @@
   .jumbotron
     %h1 Watch With Me
     %form{:action=>"/video/#{@link}", :method=>"POST"}
-      %input{:type=>"text", :placeholder=>"Paste YouTube url"}
-      %button{:class=>"btn btn-primary btn-lg", :type=>"submit", :name=>"submit"} Start a room
+      %p Start a room to watch with your friends by entering a YouTube url below.
+      %p
+        %input{:type=>"text", :placeholder=>"Paste YouTube url"}
+      %p
+        %button{:class=>"btn btn-primary btn-lg", :type=>"submit", :name=>"submit"} Start a room
