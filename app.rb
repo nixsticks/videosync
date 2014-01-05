@@ -3,11 +3,6 @@ Bundler.require
 
 module VideoSync
   class App < Sinatra::Application
-    configure do
-      uri = URI.parse(ENV["REDISTOGO_URL"])
-      REDIS = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
-    end
-
     get '/' do
       @link = SecureRandom.urlsafe_base64(5)
       haml :index
@@ -27,7 +22,11 @@ module VideoSync
       redis.set(params[:id], @video)
       @identity = "controller"
       @link = params[:id]
-      haml :room
+      if @video
+        haml :room
+      else
+        haml :not_found
+      end
     end
 
     get '/video/:id' do
