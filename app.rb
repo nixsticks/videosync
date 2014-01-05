@@ -7,7 +7,7 @@ module VideoSync
       uri = URI.parse(ENV["REDISTOGO_URL"])
       REDIS = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
     end
-    
+
     get '/' do
       haml :index
     end
@@ -21,7 +21,7 @@ module VideoSync
     end
 
     post '/video/:id' do
-      redis = Redis.new
+      redis = redis_connect
       @video = /.*\=(.*)\&?/.match(params["video"])[1]
       redis.set(params[:id], @video)
       @identity = "controller"
@@ -30,7 +30,7 @@ module VideoSync
     end
 
     get '/video/:id' do
-      redis = Redis.new
+      redis = redis_connect
       @video = redis.get(params[:id])
       @nocontrols = "&controls=0"
       haml :room
@@ -39,6 +39,11 @@ module VideoSync
     helpers do
       def partial(partial)
         haml partial.to_sym
+      end
+
+      def redis_connect
+        uri = URI.parse(ENV["REDISTOGO_URL"])
+        Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
       end
     end
   end
