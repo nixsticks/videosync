@@ -39,6 +39,7 @@ module VideoSync
       redis = redis_connect
       @video = redis.get(params[:id])
       @nocontrols = "&controls=0"
+      @link = params[:id]
       haml :room
     end
 
