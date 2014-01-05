@@ -18,11 +18,12 @@ module VideoSync
 
     post '/video/:id' do
       redis = redis_connect
-      @video = /.*\=(.*)\&?/.match(params["video"])[1]
-      redis.set(params[:id], @video)
-      @identity = "controller"
-      @link = params[:id]
-      if @video
+      match = /.*\=(.*)\&?/.match(params["video"])
+      if match      
+        @video = match[1]
+        redis.set(params[:id], @video)
+        @identity = "controller"
+        @link = params[:id]
         haml :room
       else
         haml :not_found
