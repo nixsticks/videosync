@@ -5,6 +5,6 @@
     %form{:action=>"/video/#{@link}", :method=>"POST"}
       %p Start a room to watch with your friends by entering a YouTube url below.
       %p
-        %input{:type=>"text", :placeholder=>"Paste YouTube url"}
+        %input{:type=>"text", :name => "video", :placeholder=>"Paste YouTube url"}
       %p
         %button{:class=>"btn btn-primary btn-lg", :type=>"submit", :name=>"submit"} Start a room
