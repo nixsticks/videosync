@@ -98,3 +98,7 @@ body {
   padding: 20px 0;
   text-align: center;
 }
+
+.url {
+  width: 200px;
+}
