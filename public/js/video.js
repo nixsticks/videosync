@@ -1,8 +1,9 @@
-var scheme     = "wss://";
+var scheme     = "ws://";
 var uri        = scheme + window.document.location.host + "/faye";
 var ws         = new WebSocket(uri);
 var identity = $(".hidden").text();
 var ytplayer;
+var handle;
 
 function onYouTubePlayerReady(playerId) {
   ytplayer = document.getElementById("myytplayer");
@@ -44,9 +45,15 @@ function onytplayerStateChange(newState) {
   }
 }
 
-$("#input-form").on("submit", function(event) {
+$("#handle-form").on("submit", function(event){
   event.preventDefault();
-  var handle = $("#input-handle")[0].value;
+  handle = $("#input-handle")[0].value;
+  $("#handle-form").addClass("inactive");
+  $("#chat-form").removeClass("inactive");
+});
+
+$("#chat-form").on("submit", function(event) {
+  event.preventDefault();
   var text   = $("#input-text")[0].value;
   ws.send(JSON.stringify({ handle: handle, text: text }));
   $("#input-text")[0].value = "";
@@ -54,14 +61,16 @@ $("#input-form").on("submit", function(event) {
 
 ws.onmessage = function(message) {
   var data = JSON.parse(message.data);
+  console.log(data);
   if (data == "PLAYING") {
     ytplayer.playVideo();
   }
   else if (data == "ENDED" || data == "PAUSED" || data == "BUFFERING") {
     ytplayer.pauseVideo();
   }
-  else if (typeof data == ("Object")) {
-    $("#chat-text").append("<div class='panel panel-default'><div class='panel-heading'>" + data.handle + "</div><div class='panel-body'>" + data.text + "</div></div>");
+  else if (typeof data === ("object")) {
+    $("#chat-text").append("<p>" + data.handle + ": " + data.text + "</p>");
+    // $("#chat-text").prepend("<div class='panel panel-default'><div class='panel-heading'>" + data.handle + "</div><div class='panel-body'>" + data.text + "</div></div>");
     $("#chat-text").stop().animate({
       scrollTop: $('#chat-text')[0].scrollHeight
     }, 800);
