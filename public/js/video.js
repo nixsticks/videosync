@@ -50,6 +50,7 @@ $("#handle-form").on("submit", function(event){
   handle = $("#input-handle")[0].value;
   $("#handle-form").addClass("inactive");
   $("#chat-form").removeClass("inactive");
+  $("#chat-text").append("<p><em>" + data.handle + " joined room" + "</em></p>");
 });
 
 $("#chat-form").on("submit", function(event) {
