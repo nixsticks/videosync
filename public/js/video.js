@@ -50,7 +50,7 @@ $("#handle-form").on("submit", function(event){
   handle = $("#input-handle")[0].value;
   $("#handle-form").addClass("inactive");
   $("#chat-form").removeClass("inactive");
-  ws.send(JSON.stringify("HANDLE:" + handle));
+  ws.send(JSON.stringify("&HANDLE:" + handle));
 });
 
 $("#chat-form").on("submit", function(event) {
@@ -69,7 +69,6 @@ ws.onmessage = function(message) {
     }, 800);
   }
 
-  console.log(data);
   if (data == "PLAYING") {
     ytplayer.playVideo();
   }
