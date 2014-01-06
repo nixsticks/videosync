@@ -1,9 +1,18 @@
 var scheme     = "ws://";
 var uri        = scheme + window.document.location.host + "/faye";
 var ws         = new WebSocket(uri);
-var identity = $(".hidden").text();
+var identity   = $(".hidden").text();
+var clip       = new ZeroClipboard( document.getElementById("copy-button"), {
+                  moviePath: "/path/to/ZeroClipboard.swf"
+                } );
 var ytplayer;
 var handle;
+
+clip.on( "load", function(client) {
+  client.on( "complete", function(client, args) {
+    this.style.display = "none";
+  });
+});
 
 function htmlEscape(str) {
     return String(str)
