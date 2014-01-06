@@ -21,8 +21,7 @@ module VideoSync
       if match
         @video = match[1]
         redis.set(params[:id], @video)
-        @identity = "controller"
-        @link = params[:id]
+        @identity, @link = "controller", params[:id]
         haml :room
       else
         haml :not_found
@@ -32,8 +31,7 @@ module VideoSync
     get '/video/:id' do
       @video = redis.get(params[:id])
       if @video
-        @nocontrols = "&controls=0"
-        @link = params[:id]
+        @nocontrols, @link = "&controls=0", params[:id]
         haml :room
       else
         haml :not_found
