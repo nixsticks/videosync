@@ -18,7 +18,7 @@ module VideoSync
 
     post '/video/:id' do
       match = /.*\=(.*)\&?/.match(params["video"])
-      if match      
+      if match
         @video = match[1]
         redis.set(params[:id], @video)
         @identity = "controller"
