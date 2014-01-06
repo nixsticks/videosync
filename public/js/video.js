@@ -5,6 +5,15 @@ var identity = $(".hidden").text();
 var ytplayer;
 var handle;
 
+function htmlEscape(str) {
+    return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+}
+
 function onYouTubePlayerReady(playerId) {
   ytplayer = document.getElementById("myytplayer");
   ytplayer.addEventListener("onStateChange", "onytplayerStateChange");
@@ -79,15 +88,15 @@ ws.onmessage = function(message) {
       };
       break;
     case "handle":
-      $("#chat-text").append("<p><em>" + data.content + " joined room" + "</em></p>");
+      $("#chat-text").append("<p><em>" + htmlEscape(data.content) + " joined room" + "</em></p>");
       animateScroll();
       break;
     case "leave":
-      $("#chat-text").append("<p><em>" + data.content + " left room" + "</em></p>");
+      $("#chat-text").append("<p><em>" + htmlEscape(data.content) + " left room" + "</em></p>");
       animateScroll();
       break;
     case "chat":
-      $("#chat-text").append("<p>" + data.handle + ": " + data.text + "</p>");
+      $("#chat-text").append("<p>" + htmlEscape(data.handle) + ": " + data.text + "</p>");
       animateScroll();
       break;
     case "time":
