@@ -10,7 +10,7 @@
         var params = { allowScriptAccess: "always", allowFullScreen: "true" };
         var atts = { id: "myytplayer" };
         swfobject.embedSWF("http://www.youtube.com/v/#{@video}?enablejsapi=1&playerapiid=ytplayer&version=3#{@nocontrols}", "ytapiplayer", "425", "356", "8", null, null, params, atts);
-      %p Share with friends: <a href="/video/#{@link}", target="_blank">http://watch-withme.herokuapp.com/video/#{@link}</a><span class="paperclip" id="copy-button" data-clipboard-text="Copy Me!" title="Click to copy."></span>
+      %p Share with friends: <a href="/video/#{@link}", target="_blank">http://watch-withme.herokuapp.com/video/#{@link}</a><span class="glyphicon glyphicon-paperclip" id="copy-button" data-clipboard-text="Copy Me!" title="Click to copy."></span>
   .col-md-3
     .chatbox
       .page-header
