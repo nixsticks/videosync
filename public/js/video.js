@@ -50,7 +50,7 @@ $("#handle-form").on("submit", function(event){
   handle = $("#input-handle")[0].value;
   $("#handle-form").addClass("inactive");
   $("#chat-form").removeClass("inactive");
-  $("#chat-text").append("<p><em>" + data.handle + " joined room" + "</em></p>");
+  ws.send(JSON.stringify("HANDLE:" + handle));
 });
 
 $("#chat-form").on("submit", function(event) {
@@ -62,6 +62,13 @@ $("#chat-form").on("submit", function(event) {
 
 ws.onmessage = function(message) {
   var data = JSON.parse(message.data);
+
+  function animateScroll() {
+    $("#chat-text").stop().animate({
+      scrollTop: $('#chat-text')[0].scrollHeight
+    }, 800);
+  }
+
   console.log(data);
   if (data == "PLAYING") {
     ytplayer.playVideo();
@@ -69,12 +76,14 @@ ws.onmessage = function(message) {
   else if (data == "ENDED" || data == "PAUSED" || data == "BUFFERING") {
     ytplayer.pauseVideo();
   }
+  else if (/&HANDLE:/.exec(data)) {
+    var newuser = /&HANDLE:(.*)/.exec(data)[1]
+    $("#chat-text").append("<p><em>" + newuser + " joined room" + "</em></p>");
+    animateScroll();
+  }
   else if (typeof data === ("object")) {
     $("#chat-text").append("<p>" + data.handle + ": " + data.text + "</p>");
-    // $("#chat-text").prepend("<div class='panel panel-default'><div class='panel-heading'>" + data.handle + "</div><div class='panel-body'>" + data.text + "</div></div>");
-    $("#chat-text").stop().animate({
-      scrollTop: $('#chat-text')[0].scrollHeight
-    }, 800);
+    animateScroll();
   }
   else {
     time = ytplayer.getCurrentTime();
