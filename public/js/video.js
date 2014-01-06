@@ -32,7 +32,7 @@ function onYouTubePlayerReady(playerId) {
       ws.send(JSON.stringify({content: time, command: "time"}));
     }
   }
-  setInterval(updateTime, 3000);
+  setInterval(updateTime, 1000);
 }
 
 function onytplayerStateChange(newState) {
