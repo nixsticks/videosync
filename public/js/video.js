@@ -72,12 +72,6 @@ $("#chat-form").on("submit", function(event) {
 ws.onmessage = function(message) {
   var data = JSON.parse(message.data);
 
-  function animateScroll() {
-    $("#chat-text").stop().animate({
-      scrollTop: $('#chat-text')[0].scrollHeight
-    }, 800);
-  }
-
   switch(data.command) {
     case "state":
       if (data.content == "PLAYING") {
@@ -88,11 +82,11 @@ ws.onmessage = function(message) {
       };
       break;
     case "handle":
-      $("#chat-text").append("<p><em>" + htmlEscape(data.content) + " joined room" + "</em></p>");
+      appendHandle(htmlEscape(data.content), "joined");
       animateScroll();
       break;
     case "leave":
-      $("#chat-text").append("<p><em>" + htmlEscape(data.content) + " left room" + "</em></p>");
+      appendHandle(htmlEscape(data.content), "left");
       animateScroll();
       break;
     case "chat":
@@ -105,5 +99,15 @@ ws.onmessage = function(message) {
         ytplayer.seekTo(data.content, true);
       };
       break;
+  }
+
+  function appendHandle(handle, action) {
+    $("#chat-text").append("<p><em>" + handle + " " + action + " room" + "</em></p>");
+  }
+
+  function animateScroll() {
+    $("#chat-text").stop().animate({
+      scrollTop: $('#chat-text')[0].scrollHeight
+    }, 800);
   }
 };
