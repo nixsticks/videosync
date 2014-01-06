@@ -20,7 +20,6 @@ module VideoSync
       match = /.*\=(.*)\&?/.match(params["video"])
       if match      
         @video = match[1]
-        # redis = Redis.new
         redis.set(params[:id], @video)
         @identity = "controller"
         @link = params[:id]
@@ -31,7 +30,6 @@ module VideoSync
     end
 
     get '/video/:id' do
-      # redis = Redis.new
       @video = redis.get(params[:id])
       if @video
         @nocontrols = "&controls=0"

@@ -8,7 +8,7 @@ class Backend
 
   def initialize(app)
     @app = app
-    @clients = []
+    @clients = {}
   end
 
   def call(env)
@@ -17,17 +17,25 @@ class Backend
 
       ws.on :open do |event|
         p [:open, ws.object_id]
-        MUTEX.synchronize {@clients << ws}
+        MUTEX.synchronize {@clients[ws] = "Anonymous"}
       end
 
       ws.on :message do |event|
         p [:message, event.data]
-        @clients.each {|client| client.send(event.data) }
+        message = JSON.parse(event.data)
+        MUTEX.synchronize {
+          @clients[ws] = message["content"] if message["command"] == "handle"
+          @clients.keys.each {|client| client.send(event.data) }
+        }
       end
 
       ws.on :close do |event|
         p [:close, ws.object_id, event.code, event.reason]
-        MUTEX.synchronize {@clients.delete(ws)}
+        MUTEX.synchronize {
+          leaver = @clients[ws]
+          @clients.delete(ws)
+          @clients.keys.each {|client| client.send(JSON::dump({"content" => leaver, "command" => "leave"}))}
+        }
         ws = nil
       end
 

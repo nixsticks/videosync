@@ -1,4 +1,4 @@
-var scheme     = "wss://";
+var scheme     = "ws://";
 var uri        = scheme + window.document.location.host + "/faye";
 var ws         = new WebSocket(uri);
 var identity = $(".hidden").text();
@@ -11,7 +11,7 @@ function onYouTubePlayerReady(playerId) {
   function updateTime() {
     if (identity == "controller") {
       time = ytplayer.getCurrentTime();
-      ws.send(JSON.stringify(time));
+      ws.send(JSON.stringify({content: time, command: "time"}));
     }
   }
   setInterval(updateTime, 3000);
@@ -41,7 +41,7 @@ function onytplayerStateChange(newState) {
   }
   console.log("Player's new state: " + state);
   if (identity == "controller") {
-    ws.send(JSON.stringify(state));
+    ws.send(JSON.stringify({content: state, command: "state"}));
   }
 }
 
@@ -50,13 +50,13 @@ $("#handle-form").on("submit", function(event){
   handle = $("#input-handle")[0].value;
   $("#handle-form").addClass("inactive");
   $("#chat-form").removeClass("inactive");
-  ws.send(JSON.stringify("&HANDLE:" + handle));
+  ws.send(JSON.stringify({content: handle, command: "handle"}));
 });
 
 $("#chat-form").on("submit", function(event) {
   event.preventDefault();
   var text   = $("#input-text")[0].value;
-  ws.send(JSON.stringify({ handle: handle, text: text }));
+  ws.send(JSON.stringify({ handle: handle, text: text, command: "chat" }));
   $("#input-text")[0].value = "";
 });
 
@@ -69,25 +69,32 @@ ws.onmessage = function(message) {
     }, 800);
   }
 
-  if (data == "PLAYING") {
-    ytplayer.playVideo();
-  }
-  else if (data == "ENDED" || data == "PAUSED" || data == "BUFFERING") {
-    ytplayer.pauseVideo();
-  }
-  else if (/&HANDLE:/.exec(data)) {
-    var newuser = /&HANDLE:(.*)/.exec(data)[1]
-    $("#chat-text").append("<p><em>" + newuser + " joined room" + "</em></p>");
-    animateScroll();
-  }
-  else if (typeof data === ("object")) {
-    $("#chat-text").append("<p>" + data.handle + ": " + data.text + "</p>");
-    animateScroll();
-  }
-  else {
-    time = ytplayer.getCurrentTime();
-    if (Math.abs(time - data) > 1 || time == undefined) {
-      ytplayer.seekTo(data, true);
-    }
+  switch(data.command) {
+    case "state":
+      if (data.content == "PLAYING") {
+        ytplayer.playVideo();
+      }
+      else if (data.content == "ENDED" || data.content == "PAUSED" || data.content == "BUFFERING") {
+        ytplayer.pauseVideo();
+      };
+      break;
+    case "handle":
+      $("#chat-text").append("<p><em>" + data.content + " joined room" + "</em></p>");
+      animateScroll();
+      break;
+    case "leave":
+      $("#chat-text").append("<p><em>" + data.content + " left room" + "</em></p>");
+      animateScroll();
+      break;
+    case "chat":
+      $("#chat-text").append("<p>" + data.handle + ": " + data.text + "</p>");
+      animateScroll();
+      break;
+    case "time":
+      time = ytplayer.getCurrentTime();
+      if (Math.abs(time - data.content) > 1 || time == undefined) {
+        ytplayer.seekTo(data.content, true);
+      };
+      break;
   }
 };
