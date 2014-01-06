@@ -5,8 +5,8 @@
     %link{:href=>"/css/bootstrap.min.css", :type=>"text/css", :rel=>"stylesheet"}
     %link{:href=>"/css/bootstrap-theme.min.css", :type=>"text/css", :rel=>"stylesheet"}
     %link{:href=>"/css/custom.css", :type=>"text/css", :rel=>"stylesheet"}
+  %body
+    = yield
     %script{:src=>"http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"}
     %script{:src=>"/js/bootstrap.min.js"}
     %script{:src=>"/js/swfobject.js"}
-  %body
-    = yield
