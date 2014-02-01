@@ -13,13 +13,6 @@ clip.on( "load", function(client) {
   });
 });
 
-$(window).load(function() {
-  $("#myytplayer").click(function(event){
-    event.stopPropagation();
-    event.preventDefault();
-  })
-});
-
 $(window).unload(function() {
   ws.send(JSON.stringify({content: handle, command: "leave", room: room}));
 });
@@ -37,7 +30,7 @@ function onYouTubePlayerReady(playerId) {
   ytplayer = document.getElementById("myytplayer");
   ytplayer.addEventListener("onStateChange", "onytplayerStateChange");
   function updateTime() {
-    if (identity == "controller") {
+    if (identity === "controller") {
       time = ytplayer.getCurrentTime();
       ws.send(JSON.stringify({content: time, command: "time", room: room}));
     }
@@ -56,9 +49,11 @@ function onytplayerStateChange(newState) {
       break;
     case 1:
       state = "PLAYING";
+      if (!identity === "controller") { ytplayer.pauseVideo(); }
       break;
     case 2:
       state = "PAUSED";
+      if (!identity === "controller") { ytplayer.playVideo(); }
       break;
     case 3:
       state = "BUFFERING";
@@ -67,8 +62,8 @@ function onytplayerStateChange(newState) {
       state = "CUED";
       break;
   }
-  console.log("Player's new state: " + state);
-  if (identity == "controller") {
+
+  if (identity === "controller") {
     ws.send(JSON.stringify({content: state, command: "state", room: room}));
   }
 }
@@ -94,10 +89,10 @@ ws.onmessage = function(message) {
   if (data.room === room) {
     switch(data.command) {
       case "state":
-        if (data.content == "PLAYING") {
+        if (data.content === "PLAYING") {
           ytplayer.playVideo();
         }
-        else if (data.content == "ENDED" || data.content == "PAUSED" || data.content == "BUFFERING") {
+        else if (data.content === "ENDED" || data.content === "PAUSED" || data.content === "BUFFERING") {
           ytplayer.pauseVideo();
         };
         break;
@@ -115,7 +110,7 @@ ws.onmessage = function(message) {
         break;
       case "time":
         time = ytplayer.getCurrentTime();
-        if (Math.abs(time - data.content) > 1 || time == undefined) {
+        if (Math.abs(time - data.content) > 1 || time === undefined) {
           ytplayer.seekTo(data.content, true);
         };
         break;
