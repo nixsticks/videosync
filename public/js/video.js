@@ -13,6 +13,13 @@ clip.on( "load", function(client) {
   });
 });
 
+$(window).load(function() {
+  $("#myytplayer").click(function(event){
+    event.stopPropagation();
+    event.preventDefault();
+  })
+});
+
 $(window).unload(function() {
   ws.send(JSON.stringify({content: handle, command: "leave", room: room}));
 });
