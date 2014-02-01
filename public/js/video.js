@@ -14,7 +14,7 @@ clip.on( "load", function(client) {
 });
 
 $(window).unload(function() {
-  ws.send(JSON.stringify({content: ws, command: "leave", room: room}));
+  ws.send(JSON.stringify({content: handle, command: "leave", room: room}));
 });
 
 function htmlEscape(str) {
