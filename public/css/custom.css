@@ -46,6 +46,8 @@ span.left {
 }
 
 .transparent {
+  height: 100%;
+  width: 100%;
   z-index: 1;
 }
 
