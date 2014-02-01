@@ -13,6 +13,10 @@ clip.on( "load", function(client) {
   });
 });
 
+$(window).unload(function() {
+  ws.send(JSON.stringify({content: ws, command: "leave", room: room}));
+});
+
 function htmlEscape(str) {
     return String(str)
             .replace(/&/g, '&amp;')

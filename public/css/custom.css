@@ -40,8 +40,8 @@ span.small {
 span.left {
   text-align: left;
 }
-
-#ytapiplayer {
+/*
+#myytplayer {
   z-index: 0;
 }
 
@@ -49,7 +49,7 @@ span.left {
   height: 100%;
   width: 100%;
   z-index: 1;
-}
+}*/
 
 /*.jumbotron.small {
   margin-left: auto;

@@ -5,8 +5,6 @@
     .jumbotron
       %script{:type=>"text/javascript", :src=>"/js/swfobject.js"}
       #ytapiplayer
-        - if @identity
-          .transparent
         %p You need Flash player 8+ and JavaScript enabled to view this video.
       %script{:type=>"text/javascript"}
         var params = { allowScriptAccess: "always", allowFullScreen: "true" };
