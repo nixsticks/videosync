@@ -41,6 +41,11 @@ span.left {
   text-align: left;
 }
 
+.player {
+  height: 100%;
+  width: 100%;
+}
+
 #myytplayer {
   z-index: 0;
 }
