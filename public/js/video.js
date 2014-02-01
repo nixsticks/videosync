@@ -49,11 +49,9 @@ function onytplayerStateChange(newState) {
       break;
     case 1:
       state = "PLAYING";
-      if (!(identity === "controller")) { ytplayer.pauseVideo(); console.log("Pausing video"); }
       break;
     case 2:
       state = "PAUSED";
-      if (!(identity === "controller")) { ytplayer.playVideo(); console.log("Playing video");}
       break;
     case 3:
       state = "BUFFERING";
