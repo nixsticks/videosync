@@ -5,7 +5,7 @@ var room       = location.pathname;
 var identity   = $(".hidden").text();
 var clip       = new ZeroClipboard(document.getElementById("copy-button"), { moviePath: "/js/ZeroClipboard.swf" } );
 var ytplayer;
-var handle;
+var handle = "Anonymous";
 
 clip.on( "load", function(client) {
   client.on( "complete", function(client, args) {
