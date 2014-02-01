@@ -41,6 +41,14 @@ span.left {
   text-align: left;
 }
 
+#ytapiplayer {
+  z-index: 0;
+}
+
+.transparent {
+  z-index: 1;
+}
+
 /*.jumbotron.small {
   margin-left: auto;
   margin-right: auto;
