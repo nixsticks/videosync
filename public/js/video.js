@@ -1,10 +1,9 @@
 var scheme     = "wss://";
 var uri        = scheme + window.document.location.host + "/faye";
 var ws         = new WebSocket(uri);
+var room       = location.pathname;
 var identity   = $(".hidden").text();
-var clip       = new ZeroClipboard(document.getElementById("copy-button"), {
-                  moviePath: "/js/ZeroClipboard.swf"
-                } );
+var clip       = new ZeroClipboard(document.getElementById("copy-button"), { moviePath: "/js/ZeroClipboard.swf" } );
 var ytplayer;
 var handle;
 
@@ -29,7 +28,7 @@ function onYouTubePlayerReady(playerId) {
   function updateTime() {
     if (identity == "controller") {
       time = ytplayer.getCurrentTime();
-      ws.send(JSON.stringify({content: time, command: "time"}));
+      ws.send(JSON.stringify({content: time, command: "time", room: room}));
     }
   }
   setInterval(updateTime, 1000);
@@ -59,7 +58,7 @@ function onytplayerStateChange(newState) {
   }
   console.log("Player's new state: " + state);
   if (identity == "controller") {
-    ws.send(JSON.stringify({content: state, command: "state"}));
+    ws.send(JSON.stringify({content: state, command: "state", room: room}));
   }
 }
 
@@ -68,46 +67,48 @@ $("#handle-form").on("submit", function(event){
   handle = $("#input-handle")[0].value;
   $("#handle-form").addClass("inactive");
   $("#chat-form").removeClass("inactive");
-  ws.send(JSON.stringify({content: handle, command: "handle"}));
+  ws.send(JSON.stringify({content: handle, command: "handle", room: room}));
 });
 
 $("#chat-form").on("submit", function(event) {
   event.preventDefault();
   var text   = $("#input-text")[0].value;
-  ws.send(JSON.stringify({ handle: handle, text: text, command: "chat" }));
+  ws.send(JSON.stringify({ handle: handle, text: text, command: "chat", room: room }));
   $("#input-text")[0].value = "";
 });
 
 ws.onmessage = function(message) {
   var data = JSON.parse(message.data);
 
-  switch(data.command) {
-    case "state":
-      if (data.content == "PLAYING") {
-        ytplayer.playVideo();
-      }
-      else if (data.content == "ENDED" || data.content == "PAUSED" || data.content == "BUFFERING") {
-        ytplayer.pauseVideo();
-      };
-      break;
-    case "handle":
-      appendHandle(htmlEscape(data.content), "joined");
-      animateScroll();
-      break;
-    case "leave":
-      appendHandle(htmlEscape(data.content), "left");
-      animateScroll();
-      break;
-    case "chat":
-      $("#chat-text").append("<p>" + htmlEscape(data.handle) + ": " + data.text + "</p>");
-      animateScroll();
-      break;
-    case "time":
-      time = ytplayer.getCurrentTime();
-      if (Math.abs(time - data.content) > 1 || time == undefined) {
-        ytplayer.seekTo(data.content, true);
-      };
-      break;
+  if (data.room === room) {
+    switch(data.command) {
+      case "state":
+        if (data.content == "PLAYING") {
+          ytplayer.playVideo();
+        }
+        else if (data.content == "ENDED" || data.content == "PAUSED" || data.content == "BUFFERING") {
+          ytplayer.pauseVideo();
+        };
+        break;
+      case "handle":
+        appendHandle(htmlEscape(data.content), "joined");
+        animateScroll();
+        break;
+      case "leave":
+        appendHandle(htmlEscape(data.content), "left");
+        animateScroll();
+        break;
+      case "chat":
+        $("#chat-text").append("<p>" + htmlEscape(data.handle) + ": " + data.text + "</p>");
+        animateScroll();
+        break;
+      case "time":
+        time = ytplayer.getCurrentTime();
+        if (Math.abs(time - data.content) > 1 || time == undefined) {
+          ytplayer.seekTo(data.content, true);
+        };
+        break;
+    }
   }
 
   function appendHandle(handle, action) {

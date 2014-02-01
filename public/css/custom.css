@@ -33,6 +33,14 @@ body {
   overflow: scroll;
 }
 
+span.small {
+  font-size: 100%;
+}
+
+span.left {
+  text-align: left;
+}
+
 /*.jumbotron.small {
   margin-left: auto;
   margin-right: auto;

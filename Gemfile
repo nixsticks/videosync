@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'compass'
 gem 'sinatra'
 gem 'faye'
 gem 'faye-websocket'
@@ -8,8 +9,5 @@ gem 'rack'
 gem 'puma'
 gem 'json'
 gem 'redis'
-
-group :development do
-  gem 'tux'
-  gem 'shotgun'
-end
+gem 'sass'
+gem 'sass-css-importer'

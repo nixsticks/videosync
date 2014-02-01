@@ -1,8 +1,0 @@
-= partial(:_navbar)
-.container
-  .center
-    %form{:action=>"/video/#{@link}", :method=>"POST"}
-      %p
-        %input{:type => "text", :name => "video", :placeholder => "Enter YouTube link here to start a video room."}
-      %p
-        %button{:class=>"btn btn-primary", :type => "submit", :name=>"submit"} Start the party!
