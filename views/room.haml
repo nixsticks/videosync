@@ -4,6 +4,9 @@
   .col-md-9
     .jumbotron
       %script{:type=>"text/javascript", :src=>"/js/swfobject.js"}
+      - if @identity
+        %h3 Controller
+      %h3 
       #ytapiplayer
         %p You need Flash player 8+ and JavaScript enabled to view this video.
       %script{:type=>"text/javascript"}
