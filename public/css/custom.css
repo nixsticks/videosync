@@ -22,6 +22,7 @@ body {
 
 .jumbotron {
   text-align: center;
+  position: relative;
 }
 
 .chatbox {
@@ -40,6 +41,24 @@ span.small {
 span.left {
   text-align: left;
 }
+
+.cover {
+ position: absolute;
+ top: 0;
+ left: 0;
+ right: 0;
+ bottom: 0;
+ z-index: 1;
+}
+
+.player {
+  position: relative;
+}
+
+.visible {
+  z-index: 3;
+}
+
 /*
 .player {
   height: 100%;

@@ -2,7 +2,7 @@ var scheme     = "wss://";
 var uri        = scheme + window.document.location.host + "/faye";
 var ws         = new WebSocket(uri);
 var room       = location.pathname;
-var identity   = $(".hidden").text();
+var identity   = $(".player").data("identity");
 var clip       = new ZeroClipboard(document.getElementById("copy-button"), { moviePath: "/js/ZeroClipboard.swf" } );
 var ytplayer;
 var handle = "Anonymous";
