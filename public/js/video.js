@@ -32,14 +32,15 @@ function onYouTubePlayerReady(playerId) {
   function updateTime() {
     if (identity === "controller") {
       time = ytplayer.getCurrentTime();
-      ws.send(JSON.stringify({content: time, command: "time", room: room}));
+      status = ytplayer.getPlayerState();
+      ws.send(JSON.stringify({content: time, status: status, command: "time", room: room}));
     }
   }
   setInterval(updateTime, 1000);
 }
 
 function onytplayerStateChange(newState) {
-  var state;
+  var state = states[newState]
   switch(newState) {
     case -1:
       state = "UNSTARTED";
@@ -107,6 +108,7 @@ ws.onmessage = function(message) {
         animateScroll();
         break;
       case "time":
+        if (data.status !== 1) { ytplayer.pauseVideo(); }
         time = ytplayer.getCurrentTime();
         if (Math.abs(time - data.content) > 1 || time === undefined) {
           ytplayer.seekTo(data.content, true);
