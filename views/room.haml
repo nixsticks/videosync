@@ -2,7 +2,7 @@
 .container
   .col-md-9
     .jumbotron
-      .player{data: {identity: "#{@identity}"}}
+      .player
         - unless @identity
           .cover
         %script{:type=>"text/javascript", :src=>"/js/swfobject.js"}
@@ -12,7 +12,7 @@
         %script{:type=>"text/javascript"}
           var params = { allowScriptAccess: "always", allowFullScreen: "true", wmode: "transparent" };
           var atts = { id: "myytplayer" };
-          swfobject.embedSWF("http://www.youtube.com/v/#{@video}?enablejsapi=1&playerapiid=ytplayer&version=3#{@nocontrols}", "ytapiplayer", "425", "356", "8", null, null, params, atts);
+          swfobject.embedSWF("http://www.youtube.com/v/#{@video}?enablejsapi=1&playerapiid=ytplayer&version=3#{@nocontrols}", "ytapiplayer", "550", "418", "8", null, null, params, atts);
       - if @identity
         %p You are the controller of this room.
       %p{class: "visible"} Share with friends: <a href="/video/#{@link}", target="_blank">http://watch-withme.herokuapp.com/video/#{@link}</a><br><span class="glyphicon glyphicon-paperclip" id="copy-button" data-clipboard-text="http://watch-withme.herokuapp.com/video/#{@link}" title="Click to copy."></span>

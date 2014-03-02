@@ -2,7 +2,7 @@ var scheme     = "wss://";
 var uri        = scheme + window.document.location.host + "/faye";
 var ws         = new WebSocket(uri);
 var room       = location.pathname;
-var identity   = $(".player").data("identity");
+var identity   = gon.identity;
 var clip       = new ZeroClipboard(document.getElementById("copy-button"), { moviePath: "/js/ZeroClipboard.swf" } );
 var ytplayer;
 var handle = "Anonymous";
@@ -33,7 +33,6 @@ function onYouTubePlayerReady(playerId) {
     if (identity === "controller") {
       time = ytplayer.getCurrentTime();
       status = ytplayer.getPlayerState();
-      console.log(status);
       ws.send(JSON.stringify({content: time, status: status, command: "time", room: room}));
     }
   }
@@ -92,7 +91,6 @@ ws.onmessage = function(message) {
       case "state":
         if (identity !== "controller") {
           if (data.content === "PLAYING") {
-            console.log("playing");
             ytplayer.playVideo();
           }
           else if (data.content === "ENDED" || data.content === "PAUSED" || data.content === "BUFFERING") {
@@ -103,7 +101,6 @@ ws.onmessage = function(message) {
       case "time":
         if (identity !== "controller") {
           if (data.status !== "1") {
-            console.log("paused");
             ytplayer.pauseVideo();
           }
           time = ytplayer.getCurrentTime();
