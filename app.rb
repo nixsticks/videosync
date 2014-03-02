@@ -4,9 +4,7 @@ Bundler.require
 module VideoSync
   class App < Sinatra::Application
     Sinatra::register Gon::Sinatra
-
-    redis = Redis.new
-
+    
     get '/' do
       @link = SecureRandom.urlsafe_base64(5)
       haml :index
@@ -48,10 +46,10 @@ module VideoSync
         haml partial.to_sym
       end
 
-      # def redis
-      #   uri = URI.parse(ENV["REDISTOGO_URL"])
-      #   Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
-      # end
+      def redis
+        uri = URI.parse(ENV["REDISTOGO_URL"])
+        Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
+      end
     end
   end
 end
