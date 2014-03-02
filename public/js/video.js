@@ -88,12 +88,19 @@ ws.onmessage = function(message) {
   if (data.room === room) {
     switch(data.command) {
       case "state":
-        if (data.content === "PLAYING") {
-          ytplayer.playVideo();
+        if (identity !== "controller") {
+          if (data.content === "PLAYING") { ytplayer.playVideo(); }
+          else if (data.content === "ENDED" || data.content === "PAUSED" || data.content === "BUFFERING") { ytplayer.pauseVideo(); };
         }
-        else if (data.content === "ENDED" || data.content === "PAUSED" || data.content === "BUFFERING") {
-          ytplayer.pauseVideo();
-        };
+        break;
+      case "time":
+        if (identity !== "controller") {
+          if (data.status !== 1) { ytplayer.pauseVideo(); }
+          time = ytplayer.getCurrentTime();
+          if (Math.abs(time - data.content) > 1 || time === undefined) {
+            ytplayer.seekTo(data.content, true);
+          };
+        }
         break;
       case "handle":
         appendHandle(htmlEscape(data.content), "joined");
@@ -106,13 +113,6 @@ ws.onmessage = function(message) {
       case "chat":
         $("#chat-text").append("<p>" + htmlEscape(data.handle) + ": " + data.text + "</p>");
         animateScroll();
-        break;
-      case "time":
-        if (data.status !== 1) { ytplayer.pauseVideo(); }
-        time = ytplayer.getCurrentTime();
-        if (Math.abs(time - data.content) > 1 || time === undefined) {
-          ytplayer.seekTo(data.content, true);
-        };
         break;
     }
   }
