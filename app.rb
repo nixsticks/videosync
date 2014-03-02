@@ -4,7 +4,7 @@ Bundler.require
 module VideoSync
   class App < Sinatra::Application
     Sinatra::register Gon::Sinatra
-    
+
     get '/' do
       @link = SecureRandom.urlsafe_base64(5)
       haml :index
@@ -34,7 +34,7 @@ module VideoSync
     get '/video/:id' do
       @video = redis.get(params[:id])
       if @video
-        @link = params[:id]
+        @link, gon.identity = params[:id], ""
         haml :room
       else
         haml :not_found
