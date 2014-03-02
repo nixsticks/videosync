@@ -33,6 +33,7 @@ function onYouTubePlayerReady(playerId) {
     if (identity === "controller") {
       time = ytplayer.getCurrentTime();
       status = ytplayer.getPlayerState();
+      console.log(status);
       ws.send(JSON.stringify({content: time, status: status, command: "time", room: room}));
     }
   }
@@ -40,7 +41,8 @@ function onYouTubePlayerReady(playerId) {
 }
 
 function onytplayerStateChange(newState) {
-  var state = states[newState]
+  var state;
+
   switch(newState) {
     case -1:
       state = "UNSTARTED";
@@ -89,13 +91,21 @@ ws.onmessage = function(message) {
     switch(data.command) {
       case "state":
         if (identity !== "controller") {
-          if (data.content === "PLAYING") { ytplayer.playVideo(); }
-          else if (data.content === "ENDED" || data.content === "PAUSED" || data.content === "BUFFERING") { ytplayer.pauseVideo(); };
+          if (data.content === "PLAYING") {
+            console.log("playing");
+            ytplayer.playVideo();
+          }
+          else if (data.content === "ENDED" || data.content === "PAUSED" || data.content === "BUFFERING") {
+            ytplayer.pauseVideo();
+          };
         }
         break;
       case "time":
         if (identity !== "controller") {
-          if (data.status !== 1) { ytplayer.pauseVideo(); }
+          if (data.status !== "1") {
+            console.log("paused");
+            ytplayer.pauseVideo();
+          }
           time = ytplayer.getCurrentTime();
           if (Math.abs(time - data.content) > 1 || time === undefined) {
             ytplayer.seekTo(data.content, true);
