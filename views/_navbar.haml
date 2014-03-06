@@ -1,18 +1,12 @@
-%nav{:class=>"navbar navbar-inverse navbar-default navbar-fixed-top", :role=>"navigation"}
-  .container
-    .navbar-header
-      %button{:type=>"button", :class=>"navbar-toggle", :data=>{:toggle=>"collapse", :target=>"#collapse"}}
-        %span{:class=>"sr-only"} Toggle navigation
-        %span{:class=>"icon-bar"}
-        %span{:class=>"icon-bar"}
-        %span{:class=>"icon-bar"}
-      %a{:class=>"navbar-brand", :href=>"/"} WatchWithMe
-
-    .collapse.navbar-collapse#collapse
-      %ul{:class=>"nav navbar-nav"}
+%div{class: "sticky", data: {options: "sticky_on: large"}}
+  %nav{class: "top-bar", data: {topbar: true}}
+    %ul{class: "title-area"}
+      %li{class: "name"}
+        %h1
+          %a{href: "/"} watchwithme
+    %section{class: "top-bar-section"}
+      %ul{class: "left"}
         %li
-          %a{:href=>"/"} Home
+          %a{href: "/about"} About
         %li
-          %a{:href=>"/about"} About
-        %li
-          %a{:href=>"/help"} Help
+          %a{href: "/help"} Help

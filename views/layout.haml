@@ -2,12 +2,14 @@
 %html
   %head
     %title WatchWithMe
-    %link{:href=>"/css/bootstrap.min.css", :type=>"text/css", :rel=>"stylesheet"}
-    %link{:href=>"/css/bootstrap-theme.min.css", :type=>"text/css", :rel=>"stylesheet"}
+    %link{:href=>"/css/normalize.css", :type=>"text/css", :rel=>"stylesheet"}
+    %link{href: "/css/glyphicons.css", rel: "stylesheet"}
+    %link{:href=>"/css/foundation.min.css", :type=>"text/css", :rel=>"stylesheet"}
     %link{:href=>"/css/custom.css", :type=>"text/css", :rel=>"stylesheet"}
     %script{:src=>"http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"}
     %script{:src=>"/js/bootstrap.min.js"}
     %script{:src=>"/js/swfobject.js"}
+    %link{href:'http://fonts.googleapis.com/css?family=Roboto+Slab', rel:'stylesheet', type:'text/css'}
   %body
     = include_gon
     = yield

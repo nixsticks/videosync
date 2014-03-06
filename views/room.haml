@@ -1,24 +1,25 @@
 = partial(:_navbar)
-.container
-  .col-md-9
-    .jumbotron
-      .player
-        - unless @identity
-          .cover
-        %script{:type=>"text/javascript", :src=>"/js/swfobject.js"}
-        %h3 
-        #ytapiplayer
-          %p You need Flash player 8+ and JavaScript enabled to view this video.
-        %script{:type=>"text/javascript"}
-          var params = { allowScriptAccess: "always", allowFullScreen: "true", wmode: "transparent" };
-          var atts = { id: "myytplayer" };
-          swfobject.embedSWF("http://www.youtube.com/v/#{@video}?enablejsapi=1&playerapiid=ytplayer&version=3#{@nocontrols}", "ytapiplayer", "550", "418", "8", null, null, params, atts);
-      - if @identity
-        %p You are the controller of this room.
-      %p{class: "visible"} Share with friends: <a href="/video/#{@link}", target="_blank">http://watch-withme.herokuapp.com/video/#{@link}</a><br><span class="glyphicon glyphicon-paperclip" id="copy-button" data-clipboard-text="http://watch-withme.herokuapp.com/video/#{@link}" title="Click to copy."></span>
-  .col-md-3
+.row
+  .large-9.columns.center
+    .player
+      - unless @identity
+        .cover
+      %script{:type=>"text/javascript", :src=>"/js/swfobject.js"}
+      %h3 
+      #ytapiplayer
+        %p You need Flash player 8+ and JavaScript enabled to view this video.
+      %script{:type=>"text/javascript"}
+        var params = { allowScriptAccess: "always", allowFullScreen: "true", wmode: "transparent" };
+        var atts = { id: "myytplayer" };
+        swfobject.embedSWF("http://www.youtube.com/v/#{@video}?enablejsapi=1&playerapiid=ytplayer&version=3#{@nocontrols}", "ytapiplayer", "550", "418", "8", null, null, params, atts);
+    %br
+    %br
+    - if @identity
+      %p You are the controller of this room.
+    %p{class: "visible"} Share with friends: <br><a href="/video/#{@link}", target="_blank">http://watch-withme.herokuapp.com/video/#{@link}</a><br><span class="glyphicon glyphicon-paperclip" id="copy-button" data-clipboard-text="http://watch-withme.herokuapp.com/video/#{@link}" title="Click to copy."></span>
+  .large-3.columns
     .chatbox
-      .page-header
+      .center
         %h1 Chat
       #chat-text
       %form{:id=>"handle-form", :class=>"form-inline"}
@@ -26,6 +27,6 @@
           %input{:id=>"input-handle", :type=>"text", :class=>"form-control", :placeholder=>"Enter handle", :autofocus=>"true"}
       %form{:id=>"chat-form", :class=>"form-inline inactive"}
         .form-group
-          %input{:id=>"input-text", :type=>"textarea", :class=>"form-control", :placeholder=>"Enter chat text here", :autofocus=>"true"}
+          %input{:id=>"input-text", type: "text", :class=>"form-control", :placeholder=>"Enter chat text here", :autofocus=>"true"}
 %script{:src=>"/js/ZeroClipboard.min.js"}
 %script{:src=>"/js/video.js"}

@@ -1,10 +1,13 @@
 = partial(:_navbar)
 .container
-  .jumbotron.small
+  .center
     %h1 WatchWithMe
+    %img{src: "/images/logo.png", class: "medium"}
+  .small-8.large-8.small-offset-2.large-offset-2.columns.center
     %form{:action=>"/video/#{@link}", :method=>"POST"}
       %p Start a room to watch with your friends by entering a YouTube url below.
-      %p
-        %input{:class=>"url", :type=>"text", :name => "video", :placeholder=>"Paste YouTube url"}
+      .small-6.large-6.small-offset-3.large-offset-3
+        %p
+          %input{:class=>"url", :type=>"text", :name => "video", :placeholder=>"Paste YouTube url", autofocus: true}
       %p
         %button{:class=>"btn btn-primary btn-lg", :type=>"submit", :name=>"submit"} Start a room

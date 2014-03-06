@@ -1,6 +1,14 @@
-body {
-  padding-top: 70px;
-  background-color: rgb(100,100,100);
+p, h1, h2, h3, a {
+  /*background-color: rgb(100,100,100);*/
+  font-family: "Roboto Slab";
+}
+
+.sticky {
+  text-align: center;
+}
+
+nav {
+  /*display: inline-block;*/
 }
 
 .inactive, .hidden {
@@ -9,6 +17,10 @@ body {
 
 .active {
   display: block;
+}
+
+.medium {
+  max-height: 200px;
 }
 
 .center {
@@ -26,12 +38,18 @@ body {
 }
 
 .chatbox {
-  color: white;
+  color: black;
 }
 
 #chat-text {
   height: 300px;
   overflow: scroll;
+  color: black;
+  font-size: 0.8em;
+}
+
+#chat-text p {
+  margin: 5px 0;
 }
 
 span.small {
