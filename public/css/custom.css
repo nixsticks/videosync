@@ -69,12 +69,8 @@ section.top-bar-section {
   margin: 5px 0;
 }
 
-span.small {
-  font-size: 100%;
-}
-
-span.left {
-  text-align: left;
+span.smalltext {
+  font-size: 0.8em;
 }
 
 .cover {
