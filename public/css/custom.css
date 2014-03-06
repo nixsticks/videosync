@@ -11,6 +11,10 @@ nav {
   /*display: inline-block;*/
 }
 
+.top-bar li {
+  background-color: #333;
+}
+
 .inactive, .hidden {
   display: none;
 }
@@ -19,8 +23,13 @@ nav {
   display: block;
 }
 
+.small {
+  max-height: 40px;
+  display: inline-block;
+}
+
 .medium {
-  max-height: 200px;
+  max-height: 300px;
 }
 
 .center {
@@ -30,6 +39,14 @@ nav {
 
 .url {
   width: 300px;
+}
+
+nav.top-bar {
+  text-align:center;
+}
+
+section.top-bar-section {
+  display: inline-block;
 }
 
 .jumbotron {
@@ -42,7 +59,7 @@ nav {
 }
 
 #chat-text {
-  height: 300px;
+  height: 260px;
   overflow: scroll;
   color: black;
   font-size: 0.8em;

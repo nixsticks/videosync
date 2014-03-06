@@ -1,6 +1,6 @@
 = partial(:_navbar)
 .row
-  .large-9.columns.center
+  .large-8.columns.center
     .player
       - unless @identity
         .cover
@@ -17,9 +17,10 @@
     - if @identity
       %p You are the controller of this room.
     %p{class: "visible"} Share with friends: <br><a href="/video/#{@link}", target="_blank">http://watch-withme.herokuapp.com/video/#{@link}</a><br><span class="glyphicon glyphicon-paperclip" id="copy-button" data-clipboard-text="http://watch-withme.herokuapp.com/video/#{@link}" title="Click to copy."></span>
-  .large-3.columns
+  .large-4.columns
     .chatbox
       .center
+        %img{src: "/images/logo.png", class: "small"}
         %h1 Chat
       #chat-text
       %form{:id=>"handle-form", :class=>"form-inline"}
